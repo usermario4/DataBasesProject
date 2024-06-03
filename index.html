@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Alarm Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+        }
+
+        #alarm-clock {
+            width: 300px;
+            height: 150px;
+            background-color: #111;
+            border: 10px solid #555;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #digital-watch {
+            font-family: 'Digital-7', sans-serif;
+            font-size: 48px;
+            color: rgb(55, 255, 0);
+            text-shadow: 0 0 10px rgb(140, 255, 0);
+        }
+
+        .button {
+            width: 100px;
+            height: 50px;
+            background-color: #e61111;
+            border: 10px solid #555;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;  
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="alarm-clock">
+        <div id="digital-watch"></div>
+    </div>
+    <div class="button" onclick="onNewYorkButtonClicked()">
+        <p>New York</p>
+    </div>
+    <div class="button" onclick="onRomaniaButtonClicked()">
+        <p>Romania</p>
+    </div>
+    <div class="button" onclick="onLondonButtonClicked()">
+        <p>London</p>
+    </div>
+
+    <script>
+        let currentTimezone = 'America/New_York';
+
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        function updateDigitalWatch() {
+            const digitalWatch = document.getElementById('digital-watch');
+            if (digitalWatch) {
+                digitalWatch.textContent = getCurrentTime();
+            }
+        }
+
+        function onNewYorkButtonClicked() {
+            currentTimezone = 'America/New_York';
+        }
+
+        function onRomaniaButtonClicked() {
+            currentTimezone = 'Europe/Bucharest';
+        }
+
+        function onLondonButtonClicked() {
+            currentTimezone = 'Europe/London';
+        }
+
+        setInterval(() => {
+           
+            const digitalWatch = document.getElementById('digital-watch');
+            if (digitalWatch) {
+                const now = new Date();
+                const options = { timeZone: currentTimezone, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                digitalWatch.textContent = now.toLocaleTimeString('en-US', options);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
