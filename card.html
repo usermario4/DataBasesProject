@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Card Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .business-card {
+        border: 1px solid #000;
+        padding: 20px;
+        margin-top: 20px;
+        width: 300px;
+        text-align: center;
+      }
+      .button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Business Card Generator</h1>
+      <form id="businessCardForm">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div>
+          <label for="job">Job:</label>
+          <input type="text" id="job" name="job" required />
+        </div>
+        <div>
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" required />
+        </div>
+        <button type="button" class="button" onclick="generateBusinessCard()">
+          Generate Business Card
+        </button>
+      </form>
+      <div class="business-card" id="businessCard" style="display: none">
+        <h2 id="cardName"></h2>
+        <p id="cardJob"></p>
+        <p id="cardLocation"></p>
+        <button class="button" onclick="downloadPDF()">Download PDF</button>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+      const { jsPDF } = window.jspdf;
+
+      function generateBusinessCard() {
+        const name = document.getElementById("name").value;
+        const job = document.getElementById("job").value;
+        const location = document.getElementById("location").value;
+
+        document.getElementById("cardName").textContent = name;
+        document.getElementById("cardJob").textContent = job;
+        document.getElementById("cardLocation").textContent = location;
+        document.getElementById("businessCard").style.display = "block";
+      }
+
+      function downloadPDF() {
+        const name = document.getElementById("cardName").textContent;
+        const job = document.getElementById("cardJob").textContent;
+        const location = document.getElementById("cardLocation").textContent;
+
+        const pdf = new jsPDF();
+        pdf.text(`Name: ${name}`, 10, 10);
+        pdf.text(`Job: ${job}`, 10, 20);
+        pdf.text(`Location: ${location}`, 10, 30);
+        pdf.save("business_card.pdf");
+      }
+    </script>
+  </body>
+</html>
